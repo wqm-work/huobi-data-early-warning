@@ -30,5 +30,5 @@ request(function($data) {
 生产环境下推荐利用systemctl等工具进行部署，
 
 ## 转载说明
-#### [https://github.com/huobiapi/WebSocket-PHP-demo](火币官方demo)
+#### [火币官方demo](https://github.com/huobiapi/WebSocket-PHP-demo)
 
