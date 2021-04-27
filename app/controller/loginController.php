@@ -4,6 +4,7 @@
 namespace app\controller;
 
 
+use core\config;
 use core\lib\model;
 use MillionMile\GetEnv\Env;
 use service\DataHandle;
@@ -31,8 +32,4 @@ class loginController
         }
         return ['code'=>200,'data'=>['user_id'=>$user_id,'email'=>$_POST['email']]];
     }
-
-    function test(){
-    }
-
 }
