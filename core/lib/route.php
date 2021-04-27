@@ -8,8 +8,13 @@ class route{
     public $action ;
     public function __construct()
     {
+
         if($_SERVER['REQUEST_URI'] && $_SERVER['REQUEST_URI'] != '/'){
             $path = $_SERVER['REQUEST_URI'];
+            if(strpos($path,'?')){
+                $get_param = explode('?',$path);
+                $path = $get_param[0];
+            }
             $patharr = explode('/',trim($path,'/'));
             if(isset($patharr[0])){
                 $this->ctrl = $patharr[0];

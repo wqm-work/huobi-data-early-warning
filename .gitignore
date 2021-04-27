@@ -2,3 +2,6 @@ composer.lock
 vendor/
 .idea
 
+jpush.log
+.env
+test.php

@@ -8,6 +8,7 @@ define('APP',ROOT.'/app');
 define('CONTROLLER','\app');
 define('DEBUG',true);
 include "../vendor/autoload.php";
+ini_set('date.timezone','Asia/Shanghai');
 if(DEBUG){
     $whoops = new \Whoops\Run();
     $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());

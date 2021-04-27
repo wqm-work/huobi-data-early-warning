@@ -10,6 +10,9 @@
     "filp/whoops": "*",
     "symfony/var-dumper": "*",
     "catfan/medoo": "*",
-    "ext-json": "*"
+    "ext-json": "*",
+    "jpush/jpush": "*",
+    "workerman/workerman": "*",
+    "millionmile/get_env": "^1.0"
   }
 }
