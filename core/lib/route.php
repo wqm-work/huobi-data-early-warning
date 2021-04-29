@@ -42,7 +42,7 @@ class route{
     }
     function checkToken($action){
         try {
-            if (isset($_REQUEST['token']) && $_REQUEST['token']) {
+            if (isset($_SERVER['HTTP_TOKEN']) && $_SERVER['HTTP_TOKEN']) {
                 $user = model::getInstance()->get('users', '*', ['token' => $_GET['token']]);
                 if ($user) {
                     return true;
@@ -51,6 +51,8 @@ class route{
                 }
             } elseif (in_array($action, config::all('whitelist'))) {
                 return true;
+            }else{
+                return false;
             }
         } catch (\Exception $e) {
             return false;

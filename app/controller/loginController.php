@@ -22,6 +22,9 @@ class loginController
     }
 
     function index(){
+        if(!isset($_POST['sign'])){
+            return ['code'=>'101','msg'=>'签名验证失败'];
+        }
         $sign = $_POST['sign'];
         $email = $_POST['email'];
         if($sign != md5('binging'.$email)){

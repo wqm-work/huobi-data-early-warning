@@ -1,4 +1,6 @@
 <?php
 return [
-    'login/index'
+    'login/index',
+    'index/updateSymbols',
+    'index/test',
 ];

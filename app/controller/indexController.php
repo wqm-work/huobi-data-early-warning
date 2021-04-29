@@ -1,6 +1,7 @@
 <?php
 
 namespace app\controller;
+use app\models\symbolDataHandle;
 use core\config;
 use core\lib\model;
 use service\pushMessage;
@@ -125,29 +126,36 @@ order by symbols.id asc
      * 获取火币所有symbols
      */
     function updateSymbols(){
-        $symbols = json_decode(file_get_contents("https://api.huobi.pro/v1/common/symbols"),true);
-        foreach ($symbols['data'] as $symbol){
-            $data = [];
-            foreach ($symbol as $key => $val){
-                $key = str_replace('-','_',$key);
-                $data[$key] = $val;
-            }
-            $preg = preg_match("(\d(l|s))",$data['symbol']);
+        model::getInstance()->action(function (){
 
-            if($preg){
-                $str = substr($data['base_currency'],-2);
-                $name = substr($data['base_currency'],0,-2);
-                if(strpos($str,'l')){
-                    $as = strtoupper($name)."*".substr($str,0,1).'/'.strtoupper($data['quote_currency']);
-                }else{
-                    $as = strtoupper($name)."*(-".substr($str,0,1).')/'.strtoupper($data['quote_currency']);
+            foreach (symbolDataHandle::symbol() as $symbol){
+                $data = [];
+                foreach ($symbol as $key => $val){
+                    $key = str_replace('-','_',$key);
+                    $data[$key] = $val;
                 }
-            }else{
-                $as = strtoupper($data['base_currency']).'/'.strtoupper($data['quote_currency']);
+                $preg = preg_match("(\d(l|s))",$data['symbol']);
+
+                if($preg){
+                    $str = substr($data['base_currency'],-2);
+                    $name = substr($data['base_currency'],0,-2);
+                    if(strpos($str,'l')){
+                        $as = strtoupper($name)."*".substr($str,0,1).'/'.strtoupper($data['quote_currency']);
+                    }else{
+                        $as = strtoupper($name)."*(-".substr($str,0,1).')/'.strtoupper($data['quote_currency']);
+                    }
+                }else{
+                    $as = strtoupper($data['base_currency']).'/'.strtoupper($data['quote_currency']);
+                }
+                $data['alias'] = $as;
+                self::$mysql->insert('symbols',$data);
             }
-            $data['alias'] = $as;
-            self::$mysql->insert('symbols',$data);
+        });
+
+    }
+    function test(){
+        foreach (symbolDataHandle::symbol() as $test){
+            print_r($test);
         }
     }
-
 }
