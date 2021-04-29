@@ -41,15 +41,19 @@ class route{
         }
     }
     function checkToken($action){
-        if(isset($_REQUEST['token'])){
-            $user = model::getInstance()->get('users','*',['token'=>$_GET['token']]);
-            if($user){
+        try {
+            if (isset($_REQUEST['token'])) {
+                $user = model::getInstance()->get('users', '*', ['token' => $_GET['token']]);
+                if ($user) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } elseif (in_array($action, config::all('whitelist'))) {
                 return true;
-            }else{
-                return false;
             }
-        }elseif(in_array($action,config::all('whitelist')) ){
-            return true;
+        } catch (\Exception $e) {
+            return false;
         }
     }
 }
