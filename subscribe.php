@@ -39,6 +39,18 @@ function subscribe($callback, $sub_str=[]) {
             \Workerman\Lib\Timer::add(10,function () use($con){
                 $new_symbol = model::getInstance()->select("remind",['name'],['status'=>1,'GROUP'=>'name']);
                 $old_symbol = $GLOBALS['reminds'];
+                if(!$new_symbol){
+                    if($old_symbol){
+                        foreach ($old_symbol as $symbol){
+                            $GLOBALS['reminds'] = array_diff($GLOBALS['reminds'],[$symbol]);//这里的array_diff做为删除使用
+                            $data = json_encode([
+                                'unsub' => "market.".$symbol.".detail",
+                                'id' => 'depth' . time()
+                            ]);
+                            $con->send($data);
+                        }
+                    }
+                }
                 if($new_symbol){
                     $new_symbol = array_column($new_symbol,'name');
                     /**
