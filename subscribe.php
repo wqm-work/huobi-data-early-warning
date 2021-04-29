@@ -93,5 +93,6 @@ function subscribe($callback, $sub_str=[]) {
 }
 
 subscribe(function($data){
+    print_r($data);
     new \service\DataHandle($data);
 });
