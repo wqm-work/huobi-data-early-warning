@@ -22,7 +22,11 @@ class loginController
     }
 
     function index(){
+        $sign = $_POST['sign'];
         $email = $_POST['email'];
+        if($sign != md5('binging'.$email)){
+            return ['code'=>'101','msg'=>'签名验证失败'];
+        }
         $user = self::$mysql->get("users",'*',['email'=>$email]);
         $user_id = $user?$user['id']:0;
         $token = md5($email.'huobi'.time());
