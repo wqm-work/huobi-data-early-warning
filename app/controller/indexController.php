@@ -127,7 +127,7 @@ order by symbols.id asc
      */
     function updateSymbols(){
         model::getInstance()->action(function (){
-
+            model::getInstance()->delete('symbols');
             foreach (symbolDataHandle::symbol() as $symbol){
                 $data = [];
                 foreach ($symbol as $key => $val){

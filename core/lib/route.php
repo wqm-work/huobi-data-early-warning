@@ -41,9 +41,10 @@ class route{
         }
     }
     function checkToken($action){
+
         try {
             if (isset($_SERVER['HTTP_TOKEN']) && $_SERVER['HTTP_TOKEN']) {
-                $user = model::getInstance()->get('users', '*', ['token' => $_GET['token']]);
+                $user = model::getInstance()->get('users', '*', ['token' => $_SERVER['HTTP_TOKEN']]);
                 if ($user) {
                     return true;
                 } else {
