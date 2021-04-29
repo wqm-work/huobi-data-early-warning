@@ -13,6 +13,11 @@ class Service{
         $action = $route->action;
         $ctrlFile = APP.'/controller/'.$ctrlClass.'Controller.php';
         $cltrlClass = CONTROLLER.'\controller\\'.$ctrlClass.'Controller';
+
+        if(!$route->checkToken($ctrlClass.'/'.$action)){
+            echo json_encode(['code'=>101,'msg'=>'请先登录用户']);
+            return true;
+        }
         if(is_file($ctrlFile)){
             include $ctrlFile;
             $ctrl = new $cltrlClass();

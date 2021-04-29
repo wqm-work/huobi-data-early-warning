@@ -26,7 +26,6 @@ class route{
             }else{
                 $this->action = config::get('ACTION','route');
             }
-
             //url的多余部分转换成GET参数
             $count  = count($patharr)+2;
             $i = 2;
@@ -39,6 +38,18 @@ class route{
         }else{
             $this->ctrl = config::get('CTRL','route');
             $this->action = config::get('ACTION','route');
+        }
+    }
+    function checkToken($action){
+        if(isset($_REQUEST['token'])){
+            $user = model::getInstance()->get('users','*',['token'=>$_GET['token']]);
+            if($user){
+                return true;
+            }else{
+                return false;
+            }
+        }elseif(in_array($action,config::all('whitelist')) ){
+            return true;
         }
     }
 }
