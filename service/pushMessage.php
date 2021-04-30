@@ -20,6 +20,11 @@ class pushMessage
             ->addAlias($alias)
             ->iosNotification($alert['alert'],$alert['set'])
             ->androidNotification($alert['alert'],$alert['set'])
+            ->options(
+                [
+                    'apns_production'=>true
+                ]
+            )
             ->send();
         return $res;
     }
