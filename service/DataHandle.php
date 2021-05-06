@@ -4,7 +4,9 @@
 namespace service;
 
 
+use core\lib\log;
 use core\lib\model;
+use Psr\Log\LoggerInterface;
 
 class DataHandle
 {
@@ -39,6 +41,7 @@ class DataHandle
     }
     static function pushMessage($user,$time,$symbol,$new_price,$type){
         if($user){
+            log::setLog('已经获取到了需要推送的用户.....');
             $user_ids = array_column($user,'id');
             $alias = array_column($user,'alias');
             model::getInstance()->update('remind',
@@ -50,6 +53,7 @@ class DataHandle
                 ]
             );
             self::setAlert($time,$symbol,$new_price,$type);
+            log::setLog('准备推送信息.....');
             pushMessage::pushIos($alias,self::$alert);
         }
     }

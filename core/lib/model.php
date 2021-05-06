@@ -9,7 +9,7 @@ class model extends Medoo {
     /**
      * @var model
      */
-    private static ?self $instance = null;
+    private static  $instance = null;
 
     public static function getInstance(): self {
         if (!self::$instance) {
@@ -17,7 +17,7 @@ class model extends Medoo {
         }
         return self::$instance;
     }
-    private function __construct()
+     function __construct()
     {
 
         $arr = config::all('database');
