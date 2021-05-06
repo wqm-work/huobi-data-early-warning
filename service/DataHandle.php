@@ -41,9 +41,9 @@ class DataHandle
     }
     static function pushMessage($user,$time,$symbol,$new_price,$type){
         if($user){
-            log::setLog('已经获取到了需要推送的用户.....');
             $user_ids = array_column($user,'id');
             $alias = array_column($user,'alias');
+            log::setLog('已经获取到了需要推送的用户.....',$alias);
             model::getInstance()->update('remind',
                 [
                     'notice_time'=>$time
