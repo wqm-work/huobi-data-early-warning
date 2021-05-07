@@ -1,4 +1,6 @@
 <?php
+
+use core\lib\log;
 use core\lib\model;
 use Workerman\Worker;
 use Workerman\Connection\AsyncTcpConnection;
@@ -97,7 +99,9 @@ function subscribe($callback, $sub_str=[]) {
                 call_user_func_array($GLOBALS['callback'], array($data));
             }
         };
-
+        $con->onClose = function ($con,$data){
+            log::setLog('socket断开连接.....',[],2,'socket','line','socket.log');
+        };
         $con->connect();
     };
 
@@ -105,5 +109,6 @@ function subscribe($callback, $sub_str=[]) {
 }
 
 subscribe(function($data){
+    log::setLog('火币数据通信连接中.......',[],2,'socket','line','socket.log');
     new \service\DataHandle($data);
 });
